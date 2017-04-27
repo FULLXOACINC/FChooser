@@ -20,7 +20,7 @@ public class FileListPanel extends JComponent implements FileViewPanel {
     private FilePanel filePanel;
     private JScrollPane scrollPane;
 
-    public FileListPanel(FilePanel filePanel){
+    FileListPanel(FilePanel filePanel){
         this.filePanel = filePanel;
         setLayout(new BorderLayout());
         createPanel();
@@ -31,7 +31,7 @@ public class FileListPanel extends JComponent implements FileViewPanel {
         scrollPane.repaint();
     }
 
-    public void clickFile(MouseEvent e) {
+    private void clickFile(MouseEvent e) {
         JList list = (JList)e.getSource();
         String fileName = ((FileListModel)list.getModel().getElementAt(list.getSelectedIndex())).getValue();
         File file = new File(filePanel.getPatchText() + File.separator + fileName);

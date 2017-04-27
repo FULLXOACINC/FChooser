@@ -4,54 +4,72 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by alex on 25/04/17.
  */
 public class FileTreeModel implements TreeModel {
 
-    private File root;
+    private Node root;
 
-    FileTreeModel(File root) {
+    FileTreeModel(Node root) {
         this.root = root;
     }
 
-    public Object getRoot() { return root; }
-
+    @Override
     public boolean isLeaf(Object node) {
-
-        return ((File)node).isFile();
+        return ((Node)node).getFile().isFile();
     }
 
+    @Override
     public int getChildCount(Object parent) {
-        String[] children = ((File)parent).list();
-        if (children == null) return 0;
-        return children.length;
+        return getChildList(((Node)parent).getFile()).size();
     }
 
+    @Override
+    public Object getRoot() {
+        return root;
+    }
+
+    @Override
     public Object getChild(Object parent, int index) {
-        String[] children = ((File)parent).list();
-        if ((children == null) || (index >= children.length)) return null;
-        return new File((File) parent, children[index]);
+        File fileParent=((Node)parent).getFile();
+        return new Node(new File(fileParent,getChildList(fileParent).get(index)),getChildList(fileParent).get(index));
+
     }
 
+    private List<String> getChildList(File parent) {
+        List<String> children = new ArrayList<>();
+        for (String child : parent.list()){
+            if (new File(parent,child).isDirectory()&&child.charAt(0)!='.'){
+                children.add(child);
+            }
+
+        }
+        return children;
+    }
+
+    @Override
     public int getIndexOfChild(Object parent, Object child) {
-        String[] children = ((File)parent).list();
-        System.out.println(((File)parent).list());
-        if (children == null ) return -1;
-        String childname = ((File)child).getName();
-        for(int i = 0; i < children.length; i++) {
-            if (childname.equals(children[i])) return i;
+        String[] children = ((Node)parent).getFile().list();
+        if (children == null) return -1;
+        if (new File(((Node)parent).getFile(),((Node)child).getName()).isFile())
+            return -1;
+        String childname = ((Node)child).getName();
+        for(int index = 0; index < children.length; index++) {
+            if (childname.equals(children[index])) return index;
         }
         return -1;
     }
 
+    @Override
     public void valueForPathChanged(TreePath path, Object newvalue) {}
 
+    @Override
     public void addTreeModelListener(TreeModelListener l) {}
 
+    @Override
     public void removeTreeModelListener(TreeModelListener l) {}
 
 }

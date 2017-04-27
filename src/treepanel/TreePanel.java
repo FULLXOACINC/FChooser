@@ -16,6 +16,7 @@ import java.io.File;
 /**
  * Created by alex on 25/04/17.
  */
+
 public class TreePanel extends JComponent {
 
     private JScrollPane scrollPane;
@@ -24,13 +25,13 @@ public class TreePanel extends JComponent {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(200, 350));
         File root = new File(System.getProperty("user.home"));
-        TreeModel model = new FileTreeModel(root);
+        TreeModel model = new FileTreeModel(new Node(root,root.getPath()));
         JTree tree = new JTree();
         tree.addTreeWillExpandListener(new TreeWillExpandListener() {
             @Override
             public void treeWillExpand(TreeExpansionEvent treeExpansionEvent) throws ExpandVetoException {
-                String patch = (String)treeExpansionEvent.getPath().getLastPathComponent().toString();
-                myFileChooser.getFilePanel().setPatchText(patch);
+                String path = treeExpansionEvent.getPath().toString().replaceAll("\\]| |\\[|", "").replaceAll(",", File.separator);
+                myFileChooser.getFilePanel().setPatchText(path);
                 myFileChooser.getFilePanel().updatePanel();
             }
 

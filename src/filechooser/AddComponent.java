@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
  */
 public class AddComponent {
 
-    private static final String IMG_PATCH = "img/";
     private static final Insets insets = new Insets(0, 0, 0, 0);
 
     public static void add(Container container, Component component,
@@ -22,7 +21,7 @@ public class AddComponent {
     public static void makeButton(Container container, String imgString, ActionListener action){
         JButton button = new JButton();
         button.addActionListener(action);
-        String patch = IMG_PATCH + imgString;
+        String patch = "img/" + imgString;
         ImageIcon img = new ImageIcon(patch);
         button.setIcon(img);
         container.add(button);

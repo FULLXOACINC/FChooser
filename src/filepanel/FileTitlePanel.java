@@ -17,7 +17,7 @@ public class FileTitlePanel extends JComponent implements FileViewPanel {
 
     private static final ImageIcon DIRECTORY = new ImageIcon("img/DIRECTORY_BIG.png");
     private static final ImageIcon FILE = new ImageIcon("img/FILE_BIG.png");
-    private static final int filesInRow = 2;
+    private static final int FILES_IN_ROW = 2;
     private FilePanel filePanel;
     private JScrollPane scrollPane;
     private List<JPanel> titlePanelList;
@@ -47,7 +47,7 @@ public class FileTitlePanel extends JComponent implements FileViewPanel {
              numberFileInArray < listOfFiles.size();
              numberFileInArray++) {
             File file = listOfFiles.get(numberFileInArray);
-            int position = (numberFile % filesInRow == 0) ? 0 : 1;
+            int position = (numberFile % FILES_IN_ROW == 0) ? 0 : 1;
             JPanel fileWithName = new JPanel();
             fileWithName.setLayout(new BoxLayout(fileWithName,BoxLayout.X_AXIS));
             if (file.isDirectory()) {
@@ -78,7 +78,7 @@ public class FileTitlePanel extends JComponent implements FileViewPanel {
     private int addFileOnPanel(JPanel title, int numberFile, File file, int position, JPanel fileWithName) {
         fileWithName.addMouseListener(new FileTitleListener(this, file.getAbsolutePath()));
         fileWithName.add(new JLabel(file.getName()));
-        AddComponent.add(title, fileWithName, position, numberFile/filesInRow, 1, 1);
+        AddComponent.add(title, fileWithName, position, numberFile/ FILES_IN_ROW, 1, 1);
         titlePanelList.add(fileWithName);
         return numberFile + 1;
     }

@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FileChooser:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FileChooser_jar</output-path>
+    <root id="archive" name="FileChooser.jar">
+      <element id="module-output" name="FileChooser" />
+      <element id="dir-copy" path="$PROJECT_DIR$/img" />
+    </root>
+  </artifact>
+</component>

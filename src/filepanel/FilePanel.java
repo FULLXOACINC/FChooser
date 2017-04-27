@@ -174,7 +174,7 @@ public class FilePanel extends JComponent {
 
 
     public void setChooseText(String choose) {
-        this.choose.setText(choose);
+        this.choose.setText(choose.substring(choose.lastIndexOf(File.separator)+1));
     }
 
     public boolean compliesExtentions(File file) {
